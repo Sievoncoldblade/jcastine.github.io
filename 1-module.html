@@ -1,0 +1,795 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>1-module</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+svg[id^="mermaidChart"] { line-height: 1em; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+
+
+
+
+.cm-s-inner .cm-variable {
+  color: #fff;
+}
+
+.cm-s-inner .cm-keyword,
+.cm-s-inner .cm-property {
+  color: #6699CC;
+}
+
+.cm-s-inner .cm-tag {
+  color: #EC5F67;
+}
+
+.CodeMirror div.CodeMirror-cursor {
+  border-left: 1px solid #b8bfc6;
+  z-index: 3;
+}
+
+.cm-s-inner .cm-string {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-comment,
+.cm-s-inner.cm-comment {
+  color: #65737E;
+}
+
+.cm-s-inner .cm-header,
+.cm-s-inner .cm-def,
+.cm-s-inner.cm-header,
+.cm-s-inner.cm-def,
+.cm-s-inner .cm-attribute,
+.cm-s-inner .cm-operator {
+  color: #C594C5;
+}
+
+.cm-s-inner .cm-quote,
+.cm-s-inner.cm-quote {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-hr {
+  color: #d8d5d5;
+}
+
+.cm-s-inner .cm-link {
+  color: #d3d3ef;
+}
+
+.cm-s-inner .cm-negative {
+  color: #EC5F67;
+}
+
+.cm-s-inner .cm-positive {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-string-2 {
+  color: #EC5F67;
+}
+
+.cm-s-inner .cm-meta,
+.cm-s-inner .cm-qualifier {
+  color: #b7b3b3;
+}
+
+.cm-s-inner .cm-builtin {
+  color: #f3b3f8;
+}
+
+.cm-s-inner .cm-bracket {
+  color: #5FB3B3;
+}
+
+.cm-s-inner .cm-atom,
+.cm-s-inner.cm-atom {
+  color: #84B6CB;
+}
+
+.cm-s-inner .cm-number {
+  color: #F99157;
+}
+
+.cm-s-inner .cm-variable {
+  color: #b8bfc6;
+}
+
+.cm-s-inner .cm-variable-2 {
+  color: #9FBAD5;
+}
+
+.cm-s-inner .cm-variable-3 {
+  color: #1cc685;
+}
+
+.CodeMirror-selectedtext,
+.CodeMirror-selected {
+  background: #4a89dc;
+  color: #fff !important;
+  text-shadow: none;
+}
+
+.CodeMirror-gutters {
+  border-right: none;
+}@import '';
+
+:root {
+  --primary-color: #fcba03;
+  --primary-color-rgb: 252, 186, 3;
+
+  --bg-color: #292929;
+  --bg-color-dark: #1f1f1f;
+  --dark-trait: #141414;
+  --light-trait-100: #3d3d3d;
+  --light-trait-200: #545454;
+  --light-trait-300: #777;
+  --light-trait-400: #8c8c8c;
+
+  --text-color: #f8f8f2;
+  --text-color-secondary: #d2d3d3;
+  --text-highlight-color: #fff;
+  --text-highlight-bg: rgba(var(--primary-color-rgb), 0.3);
+  --select-text-bg-color: rgba(255, 255, 255, 0.2);
+  --search-select-text-color: var(--text-highlight-color);
+  --search-select-bg-color: var(--text-highlight-bg);
+
+  --code-color: #f3b3f8;
+
+  --border-radius: 3px;
+
+  --font-size: 14px;
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+  --monospace: 'Fira Mono', 'Cousine', 'Consolas', monospace;
+
+  --heading-char-color: var(--light-trait-400);
+  --color-popover-bg-color: var(--text-color);
+  --rawblock-edit-panel-bd: var(--bg-color-dark);
+  --control-text-color: var(--text-color);
+  --meta-content-color: var(--primary-color);
+  --primary-btn-border-color: var(--primary-color);
+  --side-bar-bg-color: var(--bg-color-dark);
+  --item-hover-bg-color: var(--bg-color);
+  --active-file-bg-color: var(--bg-color);
+  --active-file-border-color: var(--bg-color);
+  --window-border: 1px solid var(--bg-color);
+  --focus-ring-color: transparent;
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+body {
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+#write {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 30px;
+  padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+  #write {
+    max-width: 1024px;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  #write {
+    max-width: 1200px;
+  }
+}
+
+#write > ul:first-child,
+#write > ol:first-child {
+  margin-top: 30px;
+}
+
+a {
+  color: var(--primary-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  line-height: 1.4;
+  cursor: text;
+}
+
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+  text-decoration: none;
+}
+
+h1 tt,
+h1 code,
+h2 tt,
+h2 code,
+h3 tt,
+h3 code,
+h4 tt,
+h4 code,
+h5 tt,
+h5 code,
+h6 tt,
+h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.2em;
+  line-height: 1.3;
+  border-bottom: 1px solid var(--light-trait-100);
+}
+
+h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid var(--light-trait-100);
+}
+
+h3 {
+  font-size: 1.4em;
+  line-height: 1.43;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+h5 {
+  font-size: 1em;
+}
+
+h6 {
+  font-size: 1em;
+  color: var(--light-trait-300);
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+table {
+  margin: 0.8em 0;
+}
+
+li > ol,
+li > ul {
+  margin: 0 0;
+}
+
+hr {
+  height: 2px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: var(--light-trait-100);
+  border: 0 none;
+  overflow: hidden;
+  box-sizing: content-box;
+}
+
+sup.md-footnote {
+  background-color: var(--light-trait-400);
+  color: var(--light-trait-100);
+}
+
+li p.first {
+  display: inline-block;
+}
+
+ul,
+ol {
+  padding-left: 30px;
+}
+
+ul:first-child,
+ol:first-child {
+  margin-top: 0;
+}
+
+ul:last-child,
+ol:last-child {
+  margin-bottom: 0;
+}
+
+mark,
+.ty-file-search-match-text,
+.md-search-hit {
+  background: var(--search-select-bg-color);
+  color: var(--search-select-text-color);
+}
+.md-search-hit * {
+  color: var(--search-select-text-color);
+}
+.cm-search-hit.CodeMirror-selectedtext,
+.md-search-hit.md-search-select,
+.md-search-select {
+  outline: 2px solid var(--primary-color);
+}
+.outline-item.select, .ty-search-item-line.select, .ty-search-item.select {
+  outline-width: 2px;
+}
+.outline-item.select {
+  outline-offset: 0px;
+}
+
+blockquote {
+  margin-left: -14px;
+  margin-right: -14px;
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--light-trait-300);
+  background-color: var(--light-trait-100);
+  padding: 7px 14px 7px 10px;
+}
+
+blockquote blockquote {
+  padding-right: 0;
+}
+
+table {
+  padding: 0;
+  word-break: initial;
+}
+
+table tr {
+  border-top: 1px solid var(--dark-trait);
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n),
+thead {
+  background-color: var(--side-bar-bg-color);
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid var(--dark-trait);
+  border-bottom: 0;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid var(--dark-trait);
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th:first-child,
+table tr td:first-child {
+  margin-top: 0;
+}
+
+table tr th:last-child,
+table tr td:last-child {
+  margin-bottom: 0;
+}
+
+kbd {
+  font-size: 0.875rem;
+  background: var(--bg-color-dark);
+  border: 1px solid var(--dark-trait);
+  box-shadow: 0 2px 0 var(--dark-trait);
+  color: var(--text-color-secondary);
+}
+
+.md-fences,
+code,
+tt {
+  border: 1px solid var(--dark-trait);
+  background-color: var(--bg-color-dark);
+  border-radius: var(--border-radius);
+  padding: 2px 4px 0px 4px;
+  font-size: 0.9em;
+  font-family: var(--monospace);
+}
+
+.md-fences {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  padding-top: 8px;
+  padding-bottom: 6px;
+  background-color: var(--side-bar-bg-color);
+}
+
+#write pre.md-meta-block {
+  padding: 1rem;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: var(--bg-color-dark);
+  border: 0;
+  border-radius: var(--border-radius);
+  color: var(--light-trait-400);
+  margin-top: 0 !important;
+}
+
+#write .mathjax-block .md-rawblock-tooltip {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+#write .mathjax-block .md-math-container {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+#write .md-mathblock-panel .md-rawblock-control:first-of-type {
+  border-top-left-radius: var(--border-radius);
+}
+
+.md-mathjax-midline {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.md-inline-math script {
+  color: var(--code-color);
+}
+
+code {
+  padding: 0 2px 0 2px;
+}
+
+.CodeMirror-lines {
+  padding-left: 4px;
+}
+
+.code-tooltip {
+  box-shadow: none;
+  border-radius: var(--border-radius);
+}
+
+#write .code-tooltip {
+  bottom: initial;
+  top: 100%;
+  left: initial;
+  right: -1px;
+  background: var(--bg-color-dark);
+  border: 1px solid var(--dark-trait);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 0;
+  font-family: var(--monospace);
+}
+
+#write .md-mathblock-panel .code-tooltip {
+  right: 0;
+  border: none;
+}
+
+#write .md-task-list-item > input {
+  -webkit-appearance: initial;
+  display: block;
+  position: absolute;
+  border: 1px solid var(--light-trait-200);
+  border-radius: 50%;
+  margin-left: -1.8rem;
+  height: 1.2rem;
+  width: 1.2rem;
+  transition: background 0.3s;
+}
+
+#write .md-task-list-item > input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#write .md-task-list-item > input[checked] {
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+#write .md-task-list-item > input[checked]::before {
+  content: '✓';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: var(--dark-trait);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.md-image > .md-meta {
+  border-radius: var(--border-radius);
+  padding: 2px 0px 0px 4px;
+  font-size: 0.9em;
+  color: inherit;
+}
+
+.md-toc {
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Source mode */
+.CodeMirror.cm-s-typora-default *,
+.cm-s-typora-default * {
+  background: inherit;
+  color: var(--text-color);
+  font-family: var(--monospace);
+  font-size: var(--font-size) !important;
+  font-style: normal;
+  font-weight: normal;
+}
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+  border-left: 2px solid var(--light-trait-400);
+}
+
+.sidebar-tabs {
+  border-bottom: none;
+}
+
+.outline-expander {
+  width: 1.5rem;
+  vertical-align: initial;
+}
+.outline-expander:before,
+.outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before,
+.outline-item-open > .outline-item > .outline-expander:hover:before {
+  content: "\f125";
+  transition: transform 125ms ease-in-out;
+}
+.outline-item-open > .outline-item > .outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before {
+  transform: rotate(90deg);
+}
+.outline-label:hover {
+  text-decoration: none;
+}
+
+#toc-dropmenu {
+  background: var(--bg-color-dark);
+}
+#toc-dropmenu .outline-title {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+.dropdown-menu .divider {
+  display: none;
+}
+
+.context-menu {
+  background-color: var(--bg-color-dark);
+}
+
+.file-node-background {
+  height: 31px;
+}
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state {
+  visibility: visible;
+}
+.file-node-icon {
+  margin-right: 8px;
+}
+.file-library-node:not(.file-node-root):focus>.file-node-content {
+  outline: none;
+}
+
+/* New file animation */
+.blink-area {
+  animation: none;
+}
+
+.file-list-item-summary {
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+
+#md-searchpanel input {
+  border-radius: var(--border-radius);
+  box-shadow: none;
+}
+#md-searchpanel input:focus {
+  box-shadow: none;
+  border-color: var(--meta-content-color);
+}
+#md-searchpanel .search-type-selection {
+  width: auto;
+}
+#md-searchpanel .btn:not(.close-btn):hover {
+  box-shadow: none;
+}
+
+.mac-seamless-mode #typora-sidebar {
+  background-color: var(--side-bar-bg-color);
+}
+
+#md-notification .btn {
+  border: 0;
+}
+
+
+
+</style>
+</head>
+<body class='typora-export'>
+<div id='write'  class=''><h2><a name="lesson-1-introduction-to-accounting" class="md-header-anchor"></a><span>Lesson 1 Introduction to Accounting </span></h2><h4><a name="objectives" class="md-header-anchor"></a><span>Objectives</span></h4><ol start='' ><li><span>Define Accounting, Accountant and Accountancy </span></li><li><span>Describe the objectives, nature and functions of accounting in business</span></li><li><span>Define Accounting Theory </span></li><li><span>Describe accounting as the language of business </span></li><li><span>Narrate the origin of accounting </span></li></ol><p>&nbsp;</p><h4><a name="definition-of-accounting" class="md-header-anchor"></a><span>Definition of Accounting </span></h4><p><span>Accounting operates within a broad socio-economic environment, and so, the knowledge required of the accountant cannot be sharply compartmentalized. It is therefore difficult to discuss one area without relating to other areas of knowledge. We place a great emphasis on the conceptual knowledge. The accountant should not only know but he should understand. </span></p><p><span>From the above it is clear that to define accounting as such, is rather difficult. Many Accountants have defined Accounting in very many languages. However, we can consider the following definitions: </span></p><blockquote><p><span>“Accountancy is the science of recording, classifying and summarizing transactions so that relation with outsiders is exactly determined and the result of operation during a particular period can be calculated, and the financial position at the end of the period may be shown.“ — H. Chakravorty</span></p></blockquote><blockquote><p><span>&quot;Accountancy may be defined as the art of recording, classifying and summarizing in a significant manner and in terms of money, transactions and events, which are in part, at least of financial character, and interpreting the results thereof.&quot;— A.I.C.P.A.</span></p></blockquote><blockquote><p><span>&quot;Accounting may be defined as the art and science of recording business transactions in a methodological manner so as to show: (a) the true state of affairs of a business of a particular period of time and, (b) the surplus or deficiency which has accrued during a specific period.&quot; — Taylor and Shearing</span></p></blockquote><p><span>From the above definition, we can say that accounting helps us to have some information regarding the following: </span></p><ol start='' ><li><span>The nature and amount of incomes. </span></li><li><span>The nature and amounts of expenses. </span></li><li><span>The nature and amounts of possible losses. </span></li><li><span>The nature and amounts of actual losses. </span></li><li><span>The size and volume of capital employed. </span></li><li><span>The increase or decrease in the volume of capital employed. </span></li><li><span>The nature and values of assets owned. </span></li><li><span>The nature and values of liabilities outstanding. </span></li><li><span>The specific amounts due to the business and their nature. </span></li><li><span>The specific amounts due to the business and their nature. </span></li><li><span>The specific amounts due to be paid to the government and their nature. </span></li><li><span>The reports regarding the interpretations of the financial results. </span></li></ol><p>&nbsp;</p><h4><a name="definition-of-accountant" class="md-header-anchor"></a><span>Definition of Accountant</span></h4><p><span>An accountant is a practitioner of accounting or accountancy. </span></p><h4><a name="definition-of-accountancy" class="md-header-anchor"></a><span>Definition of Accountancy </span></h4><p><span>Traditionally, however, Accountancy is the parent term for the entire field and accounting was a specific duty of an accountant.</span>
+<span>Accountancy is the practice to record, classify and report on transactions for a business and give feedback to management on the financial outcomes and status of a company. </span></p><p><span>So, it can be concluded that accounting is the process to keep financial accounts, while accountancy is about describing duties of an accountant who is responsible to maintain, inspect and understand financial accounts. </span></p><p><span>Accountancy is actions taken by a business in totality to produce reports that let stakeholders including managers, investors, owners and funders to make informed decisions regarding financial resources under control. </span></p><p><span>Accountancy was referred to as the actual process of communicating information about the financial state of a company to its shareholders, usually in the form of financial statements, which show the assets and resources under the company&#39;s control in monetary terms. </span></p><p>&nbsp;</p><h4><a name="objectives-of-accounting" class="md-header-anchor"></a><span>Objectives of Accounting </span></h4><p><span>The broad objects of Accounting may be briefly stated follows: </span></p><ol start='' ><li><span>To maintain the cash accounts through the Cash Book and to find out the Cash Balance on any particular day. </span></li><li><span>To maintain various other Journals for recording day-to-day non-cash transactions. </span></li><li><span>To maintain various Ledger Accounts to find out the exact amounts of incomes and expenses or gain and losses or receivables and payables. </span></li><li><span>To furnish information regarding Purchases and Sales, both Cash and Credit. </span></li><li><span>To find out the net profit or net loss or surplus or deficit for any particular period. </span></li><li><span>To find out the total capital on a particular date. </span></li><li><span>To find out the positions of assets on a particular date. </span></li><li><span>To find out the position of liabilities on a particular date. </span></li><li><span>To detect any defalcations and to check the frauds and misappropriations of money. </span></li><li><span>To detect the various errors and to rectify those through entries in the journal proper. </span></li><li><span>To confirm about the arithmetical accuracy of the books of accounts. </span></li><li><span>To help the management by supplying accounting ratios, reports and relevant data. </span></li><li><span>To calculate the cost of productions. </span></li><li><span>To help the management formulate policies for controlling cost, preparation of quotation for competitive supply etc. </span></li></ol><p>&nbsp;</p><h4><a name="nature-of-accounting" class="md-header-anchor"></a><span>Nature of Accounting </span></h4><p><span>We know Accounting is the systematic recording of financial transactions and presentation of the related information of the appropriate persons. The basic features of accounting are as follows: </span></p><ol start='' ><li><strong><span>Accounting is a process</span></strong><span>: A process refers to the method of performing any specific job step by step according to the objectives, or target. Accounting is identified as a process as it performs the specific task of collecting, processing and communicating financial information. In doing so, it follows some definite steps like collection of data recording, classification summarization, finalization and reporting. </span></li><li><strong><span>Accounting is an art</span></strong><span>: Accounting is an art of recording, classifying, summarizing and finalizing the financial data. The word ‘art’ refers to the way of performing something. It is a behavioral knowledge involving certain creativity and skill that may help us to attain some specific objectives. Accounting is a systematic method</span>
+<span>consisting of definite techniques and its proper application requires applied skill and expertise. So, by nature accounting is an art. </span></li><li><strong><span>Accounting is means and not an end</span></strong><span>: Accounting finds out the financial results and position of an entity and at the same time, it communicates this information to its users. The users then take their own decisions on the basis of such information. So, it can be said that mere keeping of accounts can be the primary objective of any person or entity. On the other hand, the main objective may be identified as taking decisions on the basis of financial information supplied by accounting. Thus, accounting itself is not an objective, it helps attaining a specific objective. So it is said the accounting means to an end’ and it is not ‘an end in itself.’ </span></li><li><strong><span>Accounting deals with financial information and transactions</span></strong><span>; Accounting records the financial transactions and data after classifying the same and finalizes their result for a definite period for conveying them to their users. So, from starting to the end, at every stage, accounting deals with financial information. Only financial information is the subject matter. It does not deal with non-monetary information of non-financial aspects. </span></li><li><strong><span>Accounting is an information system</span></strong><span>: Accounting is recognized and characterized as a storehouse of information. As a service function, it collects processes and communicates financial information of any entity. This discipline of knowledge has been evolved out to meet the need of financial information required by different interested groups. </span></li></ol><h4><a name="functions-of-accounting" class="md-header-anchor"></a><span>Functions of Accounting </span></h4><ol start='' ><li><strong><span>Record Keeping</span></strong><span>: Accounting is to maintain systematic and chronological record of financial transactions and to post them subsequently to the various Ledger Accounts and finally to prepare the Final Accounts to find out the profit or loss of the business at the end of the Accounting Period. </span></li><li><strong><span>Protecting of Properties</span></strong><span>: Accounting is to calculate the correct amount of Depreciation on Assets by choosing the appropriate Method applicable to any particular assets. Any unauthorized dissipation of any asset will bring business to the threshold of insolvency. Accounting is to design a desirable system to protect the properties and assets of the business from unauthorized and unwarranted use. </span></li><li><strong><span>Communication of Results</span></strong><span>: Accounting is always to communicate the results of the records and transactions to the different parties who are interested in particular business, i.e., properties, investors, creditors, employees, Government official and researchers etc. </span></li><li><strong><span>Meeting Legal Requirements</span></strong><span>: Accounting is to devise and develop such a system of keeping record and reporting the results as will always meet and legal requirements to enable the proprietor or the authority to file various statements like Income-Tax Returns, Sales-Tax Returns etc. </span></li></ol><p><span>After careful consideration of the above Analysis, it can be stated that Accounting Functions can be sharply divided into two distinct departments: </span></p><p><strong><span>A. Historical or Stewardship Function</span></strong></p><p><span>This part relates to the past transactions of the business firm. Accounting records, classifies, reports, analyses and interprets the transactions already effected. Accounting also calculates the profit or loss made during the year and prepares other financial statements and the statement of Assets and Liabilities or the Balance Sheet and reports and results to the proprietors, managers and other interested parties.</span></p><p><strong><span>B. Managerial Function</span></strong><span> </span></p><p><span>Accounting is to render such service to the management as to aid different levels of the managerial staff to carry out the operations of the business efficiently. Accounting Is to present </span></p><blockquote><p><span>&quot;information in such a way as to assist management in the creation of policy and in the day to day operation of an undertaking&quot;—M.E.Murphy, Managerial Accounting. </span></p></blockquote><p><span>Accounting is an advisory service function and is concerned with furnishing such information to the management as will facilitate efficient planning, operational control and coordination of future activities of the enterprise. </span></p><p><span>Thus, Accounting is to </span></p><blockquote><p><span>&quot;assist management in establishing a plan for reasonable economic objectives and in making of rational decisions&quot;—Haynes and Massic, Management Analysis </span></p></blockquote><p>&nbsp;</p><hr /><p>&nbsp;</p><h4><a name="accounting-theory" class="md-header-anchor"></a><span>Accounting Theory </span></h4><p><span>There is always a reason behind each and every action of a human being. A man Does not do anything without any sound reason. </span>
+<span>Regarding Finance, or financial matters, a man is always extra cautious and so, he never makes any financial transaction without any reason. As accounting deals with financial transactions, so every accounting work is also based on reasoning. Accounting Theories always try to explain with reason, the logic underlying particular practice. </span></p><p><span>Generally Accepted Accounting Principles cannot be changed completely as they are widely and universally accepted but they can be reformed and remodeled to suit the needs of any changed Society or Economy. Accounting Theories point out to the scientific ways of thinking for the solution of any real world accounting problem. </span></p><blockquote><p><span>According to Prof. Hendriksen, “Accounting Theory may be defined as logical reasoning in the form of a set of broad principles that provide a general frame of reference by which accounting practice can be evaluated and guide the development of new practices and procedures.”</span></p></blockquote><p><span>To be absolutely able to solve any real world accounting problem, an accountant should have sufficient practical experience aided by adequate theoretical knowledge. Generally accepted accounting principles, widely used customs, conventions, doctrines, procedures and postulates constitute accounting theories. Thus, a logical </span>
+<span>and confirmed hypotheses, accepted by all, may be called Accounting Theory. </span></p><p><span>As all other theories are based on sound and solid reasoning, Accounting Theories are similarly based on sound reasoning. Accounting theory and Accounting Practices are absolutely closely related. They are so close, as it is very difficult to make them separate. Accounting Theories have developed through observation, analysis, explanation, scrutiny and scanning of the day-to-day accounting practices. </span></p><p><span>Again on the other hand, the day-to-day accounting practices are performed by successful application of those established and generally accepted theories and principles. As due to changes in the economy, the Society changes, similarly, due changes in the Socio-economic structure in any country, the pattern of accounting practices may also change. If there is any change in accounting pattern, the pertinent theories also need necessary modifications and modulation. </span></p><p><span>So then, theories also ought to be changed. So, the relations between the two are compensatory and not competitive. There cannot be any practice without the proper theoretical knowledge. Again, theories emerge out of constant observation, analysis, examination of the theoretical problems and procedures. So, one cannot even exist without the order. Theories are considered to be the pillars on which the whole structure of accounting stands. If the accountant is to perform his work of accounting successfully and skillfully, he will have to equip himself with complete and full theoretical knowledge. </span></p><p><span>One cannot even think of practicing accounting without being properly equipped with theoretical knowledge. Not only that, theories also help the accountant in solving real world accounting problems which may crop up during the practice of accounting. So, Accounting Theory and Accounting Practices are very closely related-so close as not to be separated. </span>
+<span>There are many advantages to learning accounting theory. These are enumerated as follows: </span></p><ol start='' ><li><span>By learning accounting theory only one can know the basic reasons behind all accounting practices. </span></li><li><span>After learning theory only one can know that practical accounting is not so dull and monotonous as to be the summation of some debits and credits. </span></li><li><span>By learning accounting theory only the accountant can perform his work more skillfully and flawlessly. </span></li><li><span>An accountant, perfectly equipped with sound knowledge of accounting theory, cannot only understand his job-problems better, but also can make others understand the same in a better way. </span></li><li><span>There are many processes of practical accounting. A single process cannot be applicable to all cases. If the accountant knows the theories well, he can select the correct process of accounting applicable to a particular case. </span></li><li><span>There may be many flaws and defects in the accounting system of concern. If the accountant has got sufficient knowledge of accounting theory, he can easily find these out and administer advice to the management as to the way of future protection. </span></li><li><span>Present day business is full of diverse Socio-economic problems. So, accounting, now-a-days has become complicated and complete. Knowledge of accounting theory helps the accountant to tide over real world-accounting problems very easily. </span></li><li><span>An accountant, fully equipped with the knowledge of accounting theory, can easily help the management in an effective manner by supplying proper accounting information at the proper time. </span></li><li><span>Valuation of various assets and liabilities can be more or less accurately if the accountant has the knowledge of accounting theory. </span></li><li><span>The various persons and parties interested in the business, like the Government, public, investors, Money-lenders, Researchers etc., rely more on the accountant knowing theories than the accountant without any theoretical knowledge. </span></li></ol><p><span>No one can deny now-a-days the usefulness of having theoretical knowledge in the practice of accounting. Needless to state that a man knowing theories is much better than a man who does not know those. Even if an ordinary man can be imparted with proper theoretical knowledge and practical training, it is sure that he will turn out to be a good accountant. So, during the present days, one cannot do any theoretical knowledge of accounting. It is essential now. </span></p><h4><a name="language-of-business" class="md-header-anchor"></a><span>Language of Business </span></h4><p><span>As a man without language turns out to be somewhat useless or as a minuteman cannot be understood clearly, so also, a business without the accounts of its activities becomes meaningless. A language is the representative of the progress of the people of that language –group. A developed language reflects a developed society. Socio-economic progress has always depended on its linguistic advancement. In other words, human culture and economic activities have always been depending on language and literature for their nourishment and advancement as well.</span></p><p><span>A business unit also has got its own language in which it expresses the results of its activities and that language in “Accounting” With the help of this language, i.e., accounting, it prepares its future plans, programmes and projects. The language of the business, i.e., accounting is always effectively used for analytical consideration of the present activities and for reporting the results to various interested persons as well. </span></p><p><span>As the language of The Sun is no sun rays, as that of a flower is its fragrance, and as the same of a thunderbolt is its lightning, so also the language of a business accounting. As a human being expresses thoughts through language, so the results of the activities of a business are expressed through accounting in the form of final Accounts with Reports and Statements. The success or failure, the profits or losses and the daily activities or transactions of a business get life when they are transformed and translated into accounts. </span>
+<span>Accounting, the language of the business, helps us to know its profitability or profit earning capacity. </span></p><p><span>Not only this, the language of accounting also expresses the financial stability, strength of the Capital Structure and the inner worth or the real net worth of the business. The future prospects of a concern also can be clearly known from the published accounts. In fact, all the interested persons in a society, like Debtors, Creditors, Investors, Money-lenders, Bankers, Governments, Tax-collectors, Economists, Researchers, etc., can go through the activities of a business with the help of its languages, i.e., accounting. </span></p><p><span>One can thus have a complete, true and fair view of the business through the language the language of accounting. </span></p><h4><a name="origin-of-accounting" class="md-header-anchor"></a><strong><span>Origin of Accounting</span></strong><span> </span></h4><p><span>The history of accounting or accountancy can be traced to ancient civilizations. </span></p><p><span>The early development of accounting dates back to ancient Mesopotamia, and is closely related to developments in writing, counting and money and early auditing systems by the ancient Egyptians and Babylonians. By the time of the Roman Empire, the government had access to detailed financial information.</span></p><p><span>In India Chanakya wrote a manuscript similar to a financial management book, during the period of the Mauryan Empire. His book &quot;Arthashastra&quot; contains few detailed aspects of maintaining books of accounts for a Sovereign State. </span></p><p><span>The Italian </span><strong><span>Luca Pacioli</span></strong><span>, recognized as </span><em><span>the Father of accounting and bookkeeping</span></em><span> was the first person to publish a work on double-entry bookkeeping (Summade Arithmetica, Geometria, Proportioni et Proportionalità (early Italian: &quot;Review Of Arithmetic, Geometry, Ratio and Proportion&quot;), and introduced the field in Italy. </span></p><p><span>The modern profession of the chartered accountant originated in Scotland in the nineteenth century. Accountants often belonged to the same associations as solicitors, who often offered accounting services to their clients. Early modern accounting has similarities to today&#39;s forensic accounting. Accounting began to transition into an organized profession in the nineteenth century, with local professional bodies England merging to form the Institute of Chartered Accountants in England and Walesin 1880. </span></p><p><span>In the Philippines, José Rizal University was established in 1919 by </span><strong><span>Vicente Fabella</span></strong><span>. Fabella was the first Filipino certified public accountant.</span></p><p>&nbsp;</p></div>
+</body>
+</html>
